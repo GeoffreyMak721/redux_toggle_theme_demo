@@ -14,12 +14,7 @@ import rdxImg from "./assets/redux.png";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = React.useState(0);
   const [countNumber, setCountNumber] = React.useState(0);
-
-  const handleIncrement = () => setCount(count + 1);
-  const handleDecrement = () => setCount(count - 1);
-  const handleSetCount = () => setCount(countNumber);
 
   const handleCountNumberChange = (e) => {
     setCountNumber(
@@ -43,13 +38,9 @@ function App() {
               onChange={handleCountNumberChange}
             />
           </CardContent>
-          <CounterButton
-            increment={handleIncrement}
-            decrement={handleDecrement}
-            setCount={handleSetCount}
-          />
+          <CounterButton countNumber={countNumber} />
         </Box>
-        <CounterValue count={count} />
+        <CounterValue />
       </Card>
     </Stack>
   );
