@@ -1,52 +1,55 @@
 import * as React from "react";
-import { useTheme } from "@mui/material/styles";
+
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import SkipPreviousIcon from "@mui/icons-material/Remove";
-import PlayArrowIcon from "@mui/icons-material/ConfirmationNumber";
-import SkipNextIcon from "@mui/icons-material/Add";
-import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
+
+import CounterValue from "./components/counter-value";
+import CounterButton from "./components/counter-button";
+
+import rdxImg from "./assets/redux.png";
+
 import "./App.css";
 
 function App() {
-  const theme = useTheme();
+  const [count, setCount] = React.useState(0);
+  const [countNumber, setCountNumber] = React.useState(0);
+
+  const handleIncrement = () => setCount(count + 1);
+  const handleDecrement = () => setCount(count - 1);
+  const handleSetCount = () => setCount(countNumber);
+
+  const handleCountNumberChange = (e) => {
+    setCountNumber(
+      isNaN(parseInt(e.target.value)) ? 0 : parseInt(e.target.value)
+    );
+  };
 
   return (
     <Stack justifyContent="center" alignItems="center" sx={{ height: "100%" }}>
-      <Card sx={{ display: "flex", width: 300 }}>
+      <Box sx={{ width: 200 }} mb={4}>
+        <img alt="" src={rdxImg} style={{ width: "100%", height: "auto" }} />
+      </Box>
+      <Card sx={{ display: "flex", minWidth: 300 }}>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <CardContent sx={{ flex: "1 0 auto" }}>
-            <TextField id="outlined-basic" label="Nombre" variant="outlined" />
+            <TextField
+              id="outlined-basic"
+              label="Nombre"
+              variant="outlined"
+              value={countNumber}
+              onChange={handleCountNumberChange}
+            />
           </CardContent>
-          <Box sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}>
-            <IconButton aria-label="previous" color="primary">
-              <SkipPreviousIcon sx={{ height: 38, width: 38 }} />
-            </IconButton>
-            <IconButton aria-label="play/pause" color="primary">
-              <ArrowCircleDownIcon sx={{ height: 38, width: 38 }} />
-            </IconButton>
-            <IconButton aria-label="next" color="primary">
-              <SkipNextIcon sx={{ height: 38, width: 38 }} />
-            </IconButton>
-          </Box>
+          <CounterButton
+            increment={handleIncrement}
+            decrement={handleDecrement}
+            setCount={handleSetCount}
+          />
         </Box>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography component="div" variant="h1">
-            0
-          </Typography>
-        </Box>
+        <CounterValue count={count} />
       </Card>
     </Stack>
   );
