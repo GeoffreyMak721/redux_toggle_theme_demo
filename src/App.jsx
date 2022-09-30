@@ -14,12 +14,9 @@ import rdxImg from "./assets/redux.png";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = React.useState(0);
   const [countNumber, setCountNumber] = React.useState(0);
 
-  const handleIncrement = () => setCount(count + 1);
-  const handleDecrement = () => setCount(count - 1);
-  const handleSetCount = () => setCount(countNumber);
+  const countNumberRef = React.useRef();
 
   const handleCountNumberChange = (e) => {
     setCountNumber(
@@ -39,17 +36,12 @@ function App() {
               id="outlined-basic"
               label="Nombre"
               variant="outlined"
-              value={countNumber}
-              onChange={handleCountNumberChange}
+              inputRef={countNumberRef}
             />
           </CardContent>
-          <CounterButton
-            increment={handleIncrement}
-            decrement={handleDecrement}
-            setCount={handleSetCount}
-          />
+          <CounterButton getCountNumber={() => countNumberRef.current?.value} />
         </Box>
-        <CounterValue count={count} />
+        <CounterValue />
       </Card>
     </Stack>
   );
